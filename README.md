@@ -70,4 +70,10 @@ See `reference/starter_skill.py` and `reference/starter_agent.py` for boilerplat
 
 ---
 
+## Next Assignment
+
+Ready to continue? [**Start Lab 2.5: Contexts & Workflows**](https://classroom.github.com/a/rt4ENQaF)
+
+---
+
 *SignalWire AI Agents Certification*
