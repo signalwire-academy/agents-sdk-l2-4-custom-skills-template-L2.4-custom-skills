@@ -1,0 +1,36 @@
+name: Grade Lab
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  grade:
+    # Skip if commit is from github-classroom[bot]
+    if: github.actor != 'github-classroom[bot]'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      checks: write
+      issues: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Grade lab
+        id: grade
+        uses: signalwire-academy/swaig-grader@v1
+        with:
+          solution-file: solution/agent.py
+          next-assignment: https://classroom.github.com/a/vvaT8z9y
+
+      - name: Notify progress tracker
+        if: always()
+        continue-on-error: true
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.PROGRESS_TOKEN }}
+          repository: signalwire-academy/progress-tracker
+          event-type: grading-complete
+          client-payload: '{"repo": "${{ github.repository }}", "student": "${{ github.repository_owner }}", "lab": "L2.4", "result": "${{ steps.grade.outcome }}", "sha": "${{ github.sha }}"}'

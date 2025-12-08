@@ -1,0 +1,64 @@
+# Grading configuration for Lab 2.4: Custom Skills
+
+assignment:
+  id: L2.4-custom-skills
+  name: "Lab 2.4: Custom Skills"
+  level: 2
+  type: lab
+  passing_score: 70
+
+checks:
+  - id: instantiate
+    name: "Agent Instantiation"
+    points: 20
+    type: instantiate
+    file: solution/agent.py
+  - id: swml_valid
+    name: "SWML Generation"
+    points: 20
+    type: swml_valid
+    file: solution/agent.py
+  - id: has_skill_class
+    name: "WeatherSkill Class Exists"
+    points: 20
+    type: swml_contains
+    file: solution/agent.py
+    require:
+      - text: "get_weather"
+  - id: get_weather_works
+    name: "get_weather Function Works"
+    points: 20
+    type: exec
+    file: solution/agent.py
+    function: get_weather
+    args:
+      city: "New York"
+    expect_contains: "45"
+  - id: list_cities_works
+    name: "list_weather_cities Function Works"
+    points: 20
+    type: exec
+    file: solution/agent.py
+    function: list_weather_cities
+    expect_contains: "New York"
+
+feedback:
+  pass: |
+    Excellent work! You've completed Lab 2.4: Custom Skills.
+
+    You've learned how to:
+    - Create custom skills using SkillBase
+    - Register tools within a skill
+    - Use custom skills in agents
+
+    **Next steps:**
+    - Continue to Lab 2.5: Contexts and Workflows
+
+  fail: |
+    Some checks didn't pass. Review the requirements and try again.
+
+    **Tips:**
+    - Make sure WeatherSkill inherits from SkillBase
+    - Define SKILL_NAME and SKILL_DESCRIPTION
+    - Use the @self.tool decorator in setup() to register functions
+    - Import and add your skill in the agent with self.add_skill(WeatherSkill)
